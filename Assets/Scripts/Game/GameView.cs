@@ -43,5 +43,10 @@ namespace MWTest
         {
             gameDataService.IncrementCounter();
         }
+
+        private void OnApplicationQuit()
+        {
+            gameDataService.Save();
+        }
     }
 }

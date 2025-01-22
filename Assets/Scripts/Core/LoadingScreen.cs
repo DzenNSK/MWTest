@@ -10,7 +10,7 @@ namespace MWTest
         [Inject] IGameDataService gameDataService;
         private async void Start()
         {
-            await gameDataService.UpdateContent();
+            await gameDataService.InitialLoad();
             await SceneManager.LoadSceneAsync("GameScene").ToUniTask();
         }
     }

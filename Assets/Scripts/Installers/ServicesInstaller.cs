@@ -10,5 +10,11 @@ public class ServicesInstaller : MonoInstaller
             .FromNewComponentOnRoot()
             .AsSingle()
             .NonLazy();
+
+        Container.Bind<ILocalSaveService>()
+            .To<LocalFileSaveService>()
+            .FromNewComponentOnRoot()
+            .AsSingle()
+            .NonLazy();
     }
 }

@@ -8,6 +8,8 @@ namespace MWTest
         public int GetCounterValue();
         public void IncrementCounter();
         public string GetGreetMessage();
+        public UniTask InitialLoad();
+        public UniTask Save();
         public UniTask UpdateContent();
 
         public event Action CounterChange;
