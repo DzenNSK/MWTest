@@ -44,7 +44,6 @@ namespace MWTest
 
         private void OnContentUpdate()
         {
-            Debug.Log("Fired cont");
             greetLabel.text = gameDataService.GetGreetMessage();
         }
 
@@ -63,7 +62,6 @@ namespace MWTest
 
         private void OnResourcesReload()
         {
-            Debug.Log("Fired res");
             var spr = resourceProvider.GetSprite("button");
             buttonBack.sprite = spr;
         }
