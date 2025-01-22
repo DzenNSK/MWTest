@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ namespace MWTest
     {
         [SerializeField] private TMP_Text counterLabel;
         [SerializeField] private TMP_Text greetLabel;
+        [SerializeField] private Button updateButton;
         [SerializeField] private Button incButton;
         [SerializeField] private Image buttonBack;
 
@@ -20,6 +22,7 @@ namespace MWTest
             gameDataService.CounterChange += OnCounterChange;
             gameDataService.ContentUpdated += OnContentUpdate;
             resourceProvider.ResourcesLoaded += OnResourcesReload;
+            updateButton.onClick.AddListener(OnUpdateButton);
             incButton.onClick.AddListener(OnIncButton);
             OnCounterChange();
             OnContentUpdate();
@@ -41,6 +44,7 @@ namespace MWTest
 
         private void OnContentUpdate()
         {
+            Debug.Log("Fired cont");
             greetLabel.text = gameDataService.GetGreetMessage();
         }
 
@@ -49,8 +53,17 @@ namespace MWTest
             gameDataService.IncrementCounter();
         }
 
+        private async void OnUpdateButton()
+        {
+            updateButton.interactable = false;
+            await UniTask.WhenAll(resourceProvider.LoadResources(),
+                gameDataService.UpdateContent());
+            updateButton.interactable = true;
+        }
+
         private void OnResourcesReload()
         {
+            Debug.Log("Fired res");
             var spr = resourceProvider.GetSprite("button");
             buttonBack.sprite = spr;
         }

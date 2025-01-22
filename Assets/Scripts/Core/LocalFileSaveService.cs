@@ -22,7 +22,6 @@ namespace MWTest
         public async UniTask SaveData(SaveData data)
         {
             string filePath = Path.Combine(Application.persistentDataPath, saveFileName);
-            Debug.Log(filePath);
             var writer = new StreamWriter(filePath);
             await writer.WriteAsync(JsonConvert.SerializeObject(data));
             writer.Flush();

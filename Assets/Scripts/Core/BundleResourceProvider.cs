@@ -12,6 +12,7 @@ namespace MWTest
 
         private const string bundleName = "justbundle";
         private const string buttonName = "button";
+        private AssetBundle bundle;
 
         public event Action ResourcesLoaded;
 
@@ -27,7 +28,13 @@ namespace MWTest
 
         public async UniTask LoadResources()
         {
-            var bundle = await AssetBundle.LoadFromFileAsync(Path.Combine(Application.streamingAssetsPath, bundleName));
+            sprites.Clear();
+            if (bundle != null)
+            {
+                await bundle?.UnloadAsync(false);
+            }
+
+            bundle = await AssetBundle.LoadFromFileAsync(Path.Combine(Application.streamingAssetsPath, bundleName));
             var sprite = (Sprite) await bundle.LoadAssetAsync<Sprite>(buttonName);
             sprites.Add(buttonName, sprite);
             ResourcesLoaded?.Invoke();
