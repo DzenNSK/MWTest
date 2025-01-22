@@ -10,22 +10,27 @@ namespace MWTest
         [SerializeField] private TMP_Text counterLabel;
         [SerializeField] private TMP_Text greetLabel;
         [SerializeField] private Button incButton;
+        [SerializeField] private Image buttonBack;
 
         [Inject] IGameDataService gameDataService;
+        [Inject] IResourceProvider resourceProvider;
 
         private void Start ()
         {
             gameDataService.CounterChange += OnCounterChange;
             gameDataService.ContentUpdated += OnContentUpdate;
+            resourceProvider.ResourcesLoaded += OnResourcesReload;
             incButton.onClick.AddListener(OnIncButton);
             OnCounterChange();
             OnContentUpdate();
+            OnResourcesReload();
         }
 
         private void OnDestroy()
         {
             gameDataService.CounterChange -= OnCounterChange;
             gameDataService.ContentUpdated -= OnContentUpdate;
+            resourceProvider.ResourcesLoaded -= OnResourcesReload;
             incButton.onClick.RemoveListener(OnIncButton);
         }
 
@@ -42,6 +47,12 @@ namespace MWTest
         private void OnIncButton()
         {
             gameDataService.IncrementCounter();
+        }
+
+        private void OnResourcesReload()
+        {
+            var spr = resourceProvider.GetSprite("button");
+            buttonBack.sprite = spr;
         }
 
         private void OnApplicationQuit()

@@ -16,5 +16,11 @@ public class ServicesInstaller : MonoInstaller
             .FromNewComponentOnRoot()
             .AsSingle()
             .NonLazy();
+
+        Container.Bind<IResourceProvider>()
+            .To<BundleResourceProvider>()
+            .FromNewComponentOnRoot()
+            .AsSingle()
+            .NonLazy();
     }
 }

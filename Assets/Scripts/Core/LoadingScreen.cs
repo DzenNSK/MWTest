@@ -8,9 +8,12 @@ namespace MWTest
     public class LoadingScreen : MonoBehaviour
     {
         [Inject] IGameDataService gameDataService;
+        [Inject] IResourceProvider resourceProvider;
         private async void Start()
         {
-            await gameDataService.InitialLoad();
+            await UniTask.WhenAll(gameDataService.InitialLoad(),
+                resourceProvider.LoadResources());
+
             await SceneManager.LoadSceneAsync("GameScene").ToUniTask();
         }
     }
